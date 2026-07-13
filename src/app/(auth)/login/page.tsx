@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -34,10 +35,13 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-4">
+    <main className="relative flex min-h-screen items-center justify-center px-4">
+      <div className="absolute right-4 top-4 flex items-center gap-2">
+        <ThemeToggle />
+      </div>
       <div className="w-full max-w-sm space-y-6">
         <div className="space-y-1">
-          <h1 className="text-2xl font-semibold tracking-tight">Log in</h1>
+          <h1 className="font-display text-2xl font-semibold tracking-tight">Log in</h1>
           <p className="text-sm text-[var(--muted)]">
             Welcome back — pick up where you left off.
           </p>
@@ -79,7 +83,7 @@ export default function LoginPage() {
           </div>
 
           {error && (
-            <p role="alert" className="text-sm text-red-600">
+            <p role="alert" className="text-sm text-[var(--danger)]">
               {error}
             </p>
           )}
@@ -100,7 +104,7 @@ export default function LoginPage() {
           </Link>
         </p>
 
-        <p className="rounded-md border border-[var(--border)] bg-black/[.02] px-3 py-2 text-center text-xs text-[var(--muted)]">
+        <p className="rounded-md border border-[var(--border)] bg-[var(--foreground)]/[0.03] px-3 py-2 text-center text-xs text-[var(--muted)]">
           Demo login: demo@demo.com / demo1234
         </p>
       </div>

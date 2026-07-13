@@ -4,9 +4,9 @@
 
 Built for the Digital Heroes Full Stack Developer Trial. See [`plan.md`](./plan.md) for the full spec.
 
-**Status: Day 2 of 7 — creator directory complete.** Campaigns, deliverables, and the dashboard land Days 3-5 per the plan.
+**Status: Day 4 of 7 — stage control + notes complete.** The dashboard lands Day 5 per the plan.
 
-## Features (Day 1-2)
+## Features (Day 1-4)
 
 - Email + password signup and login (Auth.js / NextAuth v5, JWT sessions)
 - Passwords hashed with bcrypt (cost 12), never stored or returned in plaintext
@@ -14,8 +14,12 @@ Built for the Digital Heroes Full Stack Developer Trial. See [`plan.md`](./plan.
 - Prisma schema modeling Users, Creators, Campaigns, Deliverables, Notes
 - Shared Zod validation (`src/lib/validators.ts`) used by both forms and server actions
 - Creator directory: create/edit/delete (soft delete), server-side search (debounced 300ms) and filter by platform + niche, all mirrored into the URL query string
+- Campaigns: create/edit/delete (soft delete), with a deliverable-count summary per campaign
+- Deliverables: attach a creator to a campaign (defaults to Outreach sent), table view grouped by stage (plan.md §7), remove a deliverable
+- Deliverable detail page: interactive stage dropdown with optimistic UI and rollback on failure, notes timeline (add + list, newest first, timestamped)
+- Deliverable history surfaced on the creator detail page and campaign detail page
 - Every async view covers loading (skeleton), empty (two variants — no data vs. no matches), error (with retry), and success states
-- Row-level authorization on every mutation — creators are scoped to `userId`, never trusted from the client
+- Row-level authorization on every mutation — creators/campaigns are scoped to `userId`; deliverables and notes are scoped via their owning campaign, never trusted from the client
 - TypeScript strict mode, zero `any`, ESLint clean
 
 ## Tech Stack
@@ -74,8 +78,8 @@ npm run db:studio    # open Prisma Studio
 
 - [x] Day 1 - Next.js + TS + Tailwind scaffold, Prisma schema, Auth.js email/password, deployed blank pipeline
 - [x] Day 2 - Creator directory (CRUD, search, filter by platform/niche)
-- [ ] Day 3 - Campaigns + deliverables
-- [ ] Day 4 - Stage control (optimistic UI) + notes
+- [x] Day 3 - Campaigns + deliverables
+- [x] Day 4 - Stage control (optimistic UI) + notes
 - [ ] Day 5 - Dashboard (stage counts, upcoming due dates)
 - [ ] Day 6 - Full state coverage, responsive polish, SEO, production deploy
 - [ ] Day 7 - Demo video, case study
