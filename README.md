@@ -4,15 +4,18 @@
 
 Built for the Digital Heroes Full Stack Developer Trial. See [`plan.md`](./plan.md) for the full spec.
 
-**Status: Day 1 of 7 — foundation complete.** Auth, schema, and deploy pipeline are working. CRUD features (creators, campaigns, deliverables, dashboard) land Days 2-5 per the plan.
+**Status: Day 2 of 7 — creator directory complete.** Campaigns, deliverables, and the dashboard land Days 3-5 per the plan.
 
-## Features (Day 1)
+## Features (Day 1-2)
 
 - Email + password signup and login (Auth.js / NextAuth v5, JWT sessions)
 - Passwords hashed with bcrypt (cost 12), never stored or returned in plaintext
-- Session-gated routes enforced server-side in `middleware.ts` — not just hidden client-side
+- Session-gated routes enforced server-side in `src/proxy.ts` — not just hidden client-side
 - Prisma schema modeling Users, Creators, Campaigns, Deliverables, Notes
-- Shared Zod validation (`src/lib/validators.ts`) used by both the signup form and the API route
+- Shared Zod validation (`src/lib/validators.ts`) used by both forms and server actions
+- Creator directory: create/edit/delete (soft delete), server-side search (debounced 300ms) and filter by platform + niche, all mirrored into the URL query string
+- Every async view covers loading (skeleton), empty (two variants — no data vs. no matches), error (with retry), and success states
+- Row-level authorization on every mutation — creators are scoped to `userId`, never trusted from the client
 - TypeScript strict mode, zero `any`, ESLint clean
 
 ## Tech Stack
@@ -26,7 +29,7 @@ git clone https://github.com/<you>/influencer-crm && cd influencer-crm
 cp .env.example .env        # then fill in DATABASE_URL and AUTH_SECRET
 npm install                 # also runs `prisma generate` via postinstall
 npm run db:migrate          # creates tables from prisma/schema.prisma
-npm run db:seed             # creates the demo login (demo@demo.com / demo1234)
+npm run db:seed             # creates the demo login + 15 demo creators (demo@demo.com / demo1234)
 npm run dev                 # http://localhost:3000
 ```
 
@@ -44,6 +47,8 @@ npm run dev                 # http://localhost:3000
 2. Copy the connection string into `DATABASE_URL` in `.env` (use the pooled/transaction-mode URI if offered — Vercel's serverless functions need pooling).
 3. Run `npm run db:migrate` locally to create the tables and generate the first migration file (commit the generated `prisma/migrations/` folder).
 4. On Vercel, add the same env vars under **Settings -> Environment Variables**, then run `npm run db:deploy` (applies committed migrations) against production.
+
+> **Note on Prisma 7:** this project uses Prisma 7, which moved the database connection out of `schema.prisma` and into [`prisma.config.ts`](./prisma.config.ts), and now requires an explicit driver adapter (`@prisma/adapter-pg`) instead of connecting internally — see `src/lib/db.ts` and `prisma/seed.ts`. `DATABASE_URL` must be set in `.env` before running *any* `prisma` command, including `prisma generate`.
 
 ## Demo Login
 
@@ -68,7 +73,7 @@ npm run db:studio    # open Prisma Studio
 ## Roadmap
 
 - [x] Day 1 - Next.js + TS + Tailwind scaffold, Prisma schema, Auth.js email/password, deployed blank pipeline
-- [ ] Day 2 - Creator directory (CRUD, search, filter)
+- [x] Day 2 - Creator directory (CRUD, search, filter by platform/niche)
 - [ ] Day 3 - Campaigns + deliverables
 - [ ] Day 4 - Stage control (optimistic UI) + notes
 - [ ] Day 5 - Dashboard (stage counts, upcoming due dates)
