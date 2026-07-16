@@ -30,6 +30,8 @@ export type DeliverableWithRelations = Deliverable & {
   campaign: Campaign;
   notes: Note[];
 };
+export type UpcomingDeliverable = Deliverable & { creator: Creator; campaign: Campaign };
+export type StageCounts = Record<StageValue, number>;
 
 // --- Queries — safe to call from Server Components or Client Components ---
 
@@ -81,6 +83,43 @@ export async function getDeliverableById(id: string): Promise<DeliverableWithRel
       campaign: true,
       notes: { orderBy: { createdAt: "desc" } },
     },
+  });
+}
+
+/** Deliverable counts by stage across all (non-archived) campaigns, for the
+ *  dashboard's stage summary (plan.md Day 5). Every stage is present in the
+ *  result even at zero, so the UI never has to special-case a missing key. */
+export async function getStageCounts(): Promise<StageCounts> {
+  const userId = await requireUserId();
+
+  const grouped = await db.deliverable.groupBy({
+    by: ["status"],
+    where: { campaign: { userId, deletedAt: null } },
+    _count: { _all: true },
+  });
+
+  const counts = Object.fromEntries(stageEnum.options.map((s) => [s, 0])) as StageCounts;
+  for (const row of grouped) {
+    counts[row.status] = row._count._all;
+  }
+  return counts;
+}
+
+/** Deliverables due in the next N days across all (non-archived) campaigns,
+ *  soonest first, for the dashboard's "upcoming due dates" list. */
+export async function getUpcomingDeliverables(days = 7): Promise<UpcomingDeliverable[]> {
+  const userId = await requireUserId();
+
+  const now = new Date();
+  const cutoff = new Date(now.getTime() + days * 24 * 60 * 60 * 1000);
+
+  return db.deliverable.findMany({
+    where: {
+      campaign: { userId, deletedAt: null },
+      dueDate: { gte: now, lte: cutoff },
+    },
+    include: { creator: true, campaign: true },
+    orderBy: [{ dueDate: "asc" }, { id: "asc" }],
   });
 }
 

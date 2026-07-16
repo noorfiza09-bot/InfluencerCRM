@@ -44,8 +44,8 @@ export function CampaignList({ campaigns }: { campaigns: CampaignWithCount[] }) 
 
   return (
     <>
-      <div className="overflow-hidden rounded-lg border border-[var(--border)]">
-        <table className="w-full text-left text-sm">
+      <div className="overflow-x-auto rounded-lg border border-[var(--border)]">
+        <table className="w-full min-w-[640px] text-left text-sm">
           <thead className="border-b border-[var(--border)] bg-black/[.02] text-xs uppercase tracking-wide text-[var(--muted)]">
             <tr>
               <th scope="col" className="px-4 py-2.5 font-medium">Campaign</th>
@@ -63,7 +63,7 @@ export function CampaignList({ campaigns }: { campaigns: CampaignWithCount[] }) 
                 <td className="px-4 py-3">
                   <Link
                     href={`/campaigns/${campaign.id}`}
-                    className="font-medium hover:text-[var(--accent)] hover:underline"
+                    className="rounded font-medium hover:text-[var(--accent)] hover:underline focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:outline-offset-2"
                   >
                     {campaign.name}
                   </Link>

@@ -38,7 +38,7 @@ export default async function CampaignDetailPage({
     <div>
       <Link
         href="/campaigns"
-        className="text-sm text-[var(--muted)] hover:text-[var(--foreground)]"
+        className="rounded text-sm text-[var(--muted)] hover:text-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:outline-offset-2"
       >
         ← Back to campaigns
       </Link>

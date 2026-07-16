@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { DeliverableStatusSelect } from "@/components/deliverable-status-select";
+import { CreatorAvatar } from "@/components/creator-avatar";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { deleteDeliverable, type DeliverableWithCreator } from "@/server/deliverables";
 
@@ -44,8 +45,8 @@ export function DeliverableTable({ deliverables }: { deliverables: DeliverableWi
 
   return (
     <>
-      <div className="overflow-hidden rounded-lg border border-[var(--border)]">
-        <table className="w-full text-left text-sm">
+      <div className="overflow-x-auto rounded-lg border border-[var(--border)]">
+        <table className="w-full min-w-[640px] text-left text-sm">
           <thead className="border-b border-[var(--border)] bg-black/[.02] text-xs uppercase tracking-wide text-[var(--muted)]">
             <tr>
               <th scope="col" className="px-4 py-2.5 font-medium">Creator</th>
@@ -61,13 +62,20 @@ export function DeliverableTable({ deliverables }: { deliverables: DeliverableWi
             {deliverables.map((deliverable) => (
               <tr key={deliverable.id} className="hover:bg-black/[.015]">
                 <td className="px-4 py-3">
-                  <Link
-                    href={`/creators/${deliverable.creator.id}`}
-                    className="font-medium hover:text-[var(--accent)] hover:underline"
-                  >
-                    {deliverable.creator.name}
-                  </Link>
-                  <div className="text-xs text-[var(--muted)]">{deliverable.creator.handle}</div>
+                  <div className="flex items-center gap-3">
+                    <CreatorAvatar name={deliverable.creator.name} size="sm" />
+                    <div>
+                      <Link
+                        href={`/creators/${deliverable.creator.id}`}
+                        className="rounded font-medium hover:text-[var(--accent)] hover:underline focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:outline-offset-2"
+                      >
+                        {deliverable.creator.name}
+                      </Link>
+                      <div className="text-xs text-[var(--muted)]">
+                        {deliverable.creator.handle}
+                      </div>
+                    </div>
+                  </div>
                 </td>
                 <td className="px-4 py-3">
                   <DeliverableStatusSelect

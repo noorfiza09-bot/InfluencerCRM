@@ -9,7 +9,7 @@ export default function CreatorNotFound() {
       </p>
       <Link
         href="/creators"
-        className="mt-4 inline-block rounded-md border border-[var(--border)] px-3 py-2 text-sm font-medium hover:bg-[var(--foreground)]/[0.04]"
+        className="mt-4 inline-block rounded-md border border-[var(--border)] px-3 py-2 text-sm font-medium hover:bg-black/[.03] focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:outline-offset-2"
       >
         Back to creators
       </Link>

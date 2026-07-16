@@ -2,17 +2,17 @@ function SkeletonRow() {
   return (
     <tr>
       <td className="px-4 py-3">
-        <div className="h-4 w-32 animate-pulse rounded bg-[var(--foreground)]/[0.07]" />
-        <div className="mt-1.5 h-3 w-20 animate-pulse rounded bg-[var(--foreground)]/[0.06]" />
+        <div className="h-4 w-32 animate-pulse rounded bg-black/[.06]" />
+        <div className="mt-1.5 h-3 w-20 animate-pulse rounded bg-black/[.05]" />
       </td>
       <td className="px-4 py-3">
-        <div className="h-5 w-20 animate-pulse rounded-full bg-[var(--foreground)]/[0.07]" />
+        <div className="h-5 w-20 animate-pulse rounded-full bg-black/[.06]" />
       </td>
       <td className="px-4 py-3">
-        <div className="h-4 w-12 animate-pulse rounded bg-[var(--foreground)]/[0.07]" />
+        <div className="h-4 w-12 animate-pulse rounded bg-black/[.06]" />
       </td>
       <td className="px-4 py-3">
-        <div className="h-5 w-24 animate-pulse rounded-full bg-[var(--foreground)]/[0.07]" />
+        <div className="h-5 w-24 animate-pulse rounded-full bg-black/[.06]" />
       </td>
       <td className="px-4 py-3" />
     </tr>
@@ -24,21 +24,21 @@ export default function CreatorsLoading() {
     <div>
       <div className="flex items-center justify-between">
         <div>
-          <div className="h-7 w-28 animate-pulse rounded bg-[var(--foreground)]/[0.07]" />
-          <div className="mt-2 h-4 w-40 animate-pulse rounded bg-[var(--foreground)]/[0.06]" />
+          <div className="h-7 w-28 animate-pulse rounded bg-black/[.06]" />
+          <div className="mt-2 h-4 w-40 animate-pulse rounded bg-black/[.05]" />
         </div>
-        <div className="h-9 w-32 animate-pulse rounded-md bg-[var(--foreground)]/[0.07]" />
+        <div className="h-9 w-32 animate-pulse rounded-md bg-black/[.06]" />
       </div>
 
       <div className="mt-6 flex gap-3">
-        <div className="h-9 w-64 animate-pulse rounded-md bg-[var(--foreground)]/[0.07]" />
-        <div className="h-9 w-44 animate-pulse rounded-md bg-[var(--foreground)]/[0.07]" />
-        <div className="h-9 w-44 animate-pulse rounded-md bg-[var(--foreground)]/[0.07]" />
+        <div className="h-9 w-64 animate-pulse rounded-md bg-black/[.06]" />
+        <div className="h-9 w-44 animate-pulse rounded-md bg-black/[.06]" />
+        <div className="h-9 w-44 animate-pulse rounded-md bg-black/[.06]" />
       </div>
 
-      <div className="mt-4 overflow-hidden rounded-lg border border-[var(--border)]">
-        <table className="w-full text-left text-sm">
-          <thead className="border-b border-[var(--border)] bg-[var(--foreground)]/[0.03]">
+      <div className="mt-4 overflow-x-auto rounded-lg border border-[var(--border)]">
+        <table className="w-full min-w-[640px] text-left text-sm">
+          <thead className="border-b border-[var(--border)] bg-black/[.02]">
             <tr>
               <th className="px-4 py-2.5" />
               <th className="px-4 py-2.5" />

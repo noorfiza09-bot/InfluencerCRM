@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { Creator } from "@prisma/client";
 import { PlatformBadge } from "@/components/platform-badge";
+import { CreatorAvatar } from "@/components/creator-avatar";
 import { Modal } from "@/components/ui/modal";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { CreatorForm } from "@/components/creator-form";
@@ -44,9 +45,9 @@ export function CreatorList({ creators }: { creators: Creator[] }) {
 
   return (
     <>
-      <div className="overflow-hidden rounded-lg border border-[var(--border)]">
-        <table className="w-full text-left text-sm">
-          <thead className="border-b border-[var(--border)] bg-[var(--foreground)]/[0.03] text-xs uppercase tracking-wide text-[var(--muted)]">
+      <div className="overflow-x-auto rounded-lg border border-[var(--border)]">
+        <table className="w-full min-w-[640px] text-left text-sm">
+          <thead className="border-b border-[var(--border)] bg-black/[.02] text-xs uppercase tracking-wide text-[var(--muted)]">
             <tr>
               <th scope="col" className="px-4 py-2.5 font-medium">Name</th>
               <th scope="col" className="px-4 py-2.5 font-medium">Platform</th>
@@ -59,15 +60,20 @@ export function CreatorList({ creators }: { creators: Creator[] }) {
           </thead>
           <tbody className="divide-y divide-[var(--border)]">
             {creators.map((creator) => (
-              <tr key={creator.id} className="hover:bg-[var(--foreground)]/[0.02]">
+              <tr key={creator.id} className="hover:bg-black/[.015]">
                 <td className="px-4 py-3">
-                  <Link
-                    href={`/creators/${creator.id}`}
-                    className="font-medium hover:text-[var(--accent)] hover:underline"
-                  >
-                    {creator.name}
-                  </Link>
-                  <div className="text-xs text-[var(--muted)]">{creator.handle}</div>
+                  <div className="flex items-center gap-3">
+                    <CreatorAvatar name={creator.name} size="sm" />
+                    <div>
+                      <Link
+                        href={`/creators/${creator.id}`}
+                        className="rounded font-medium hover:text-[var(--accent)] hover:underline focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:outline-offset-2"
+                      >
+                        {creator.name}
+                      </Link>
+                      <div className="text-xs text-[var(--muted)]">{creator.handle}</div>
+                    </div>
+                  </div>
                 </td>
                 <td className="px-4 py-3">
                   <PlatformBadge platform={creator.platform} />
@@ -83,7 +89,7 @@ export function CreatorList({ creators }: { creators: Creator[] }) {
                       creator.niche.map((tag) => (
                         <span
                           key={tag}
-                          className="rounded-full bg-[var(--foreground)]/[0.06] px-2 py-0.5 text-xs"
+                          className="rounded-full bg-black/[.05] px-2 py-0.5 text-xs"
                         >
                           {tag}
                         </span>
@@ -96,7 +102,7 @@ export function CreatorList({ creators }: { creators: Creator[] }) {
                     <button
                       type="button"
                       onClick={() => setEditingCreator(creator)}
-                      className="rounded-md px-2 py-1 text-xs font-medium text-[var(--muted)] hover:bg-[var(--foreground)]/[0.06] hover:text-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
+                      className="rounded-md px-2 py-1 text-xs font-medium text-[var(--muted)] hover:bg-black/[.05] hover:text-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
                     >
                       Edit
                     </button>
@@ -106,7 +112,7 @@ export function CreatorList({ creators }: { creators: Creator[] }) {
                         setDeleteError(null);
                         setDeletingCreator(creator);
                       }}
-                      className="rounded-md px-2 py-1 text-xs font-medium text-[var(--muted)] hover:bg-red-50 hover:text-red-700 focus-visible:outline-2 focus-visible:outline-[var(--accent)] dark:hover:bg-red-950/40 dark:hover:text-red-300"
+                      className="rounded-md px-2 py-1 text-xs font-medium text-[var(--muted)] hover:bg-red-50 hover:text-red-700 focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
                     >
                       Delete
                     </button>

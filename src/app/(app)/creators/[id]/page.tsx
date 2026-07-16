@@ -4,6 +4,7 @@ import { getCreatorById } from "@/server/creators";
 import { listDeliverablesByCreator } from "@/server/deliverables";
 import { PlatformBadge } from "@/components/platform-badge";
 import { StageBadge } from "@/components/stage-badge";
+import { CreatorAvatar } from "@/components/creator-avatar";
 import { CreatorDetailActions } from "@/components/creator-detail-actions";
 
 const CURRENCY = new Intl.NumberFormat("en-US", {
@@ -37,7 +38,7 @@ export default async function CreatorDetailPage({
     <div>
       <Link
         href="/creators"
-        className="text-sm text-[var(--muted)] hover:text-[var(--foreground)]"
+        className="rounded text-sm text-[var(--muted)] hover:text-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:outline-offset-2"
       >
         ← Back to creators
       </Link>
@@ -49,9 +50,12 @@ export default async function CreatorDetailPage({
       )}
 
       <div className="mt-4 flex items-start justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight">{creator.name}</h1>
-          <p className="mt-1 text-sm text-[var(--muted)]">{creator.handle}</p>
+        <div className="flex items-center gap-4">
+          <CreatorAvatar name={creator.name} size="lg" />
+          <div>
+            <h1 className="text-2xl font-semibold tracking-tight">{creator.name}</h1>
+            <p className="mt-1 text-sm text-[var(--muted)]">{creator.handle}</p>
+          </div>
         </div>
         {!isArchived && <CreatorDetailActions creator={creator} />}
       </div>
@@ -101,8 +105,8 @@ export default async function CreatorDetailPage({
             No campaigns yet — attach this creator to a campaign to see it here.
           </div>
         ) : (
-          <div className="mt-3 overflow-hidden rounded-lg border border-[var(--border)]">
-            <table className="w-full text-left text-sm">
+          <div className="mt-3 overflow-x-auto rounded-lg border border-[var(--border)]">
+            <table className="w-full min-w-[520px] text-left text-sm">
               <thead className="border-b border-[var(--border)] bg-black/[.02] text-xs uppercase tracking-wide text-[var(--muted)]">
                 <tr>
                   <th scope="col" className="px-4 py-2.5 font-medium">Campaign</th>
@@ -117,7 +121,7 @@ export default async function CreatorDetailPage({
                     <td className="px-4 py-3">
                       <Link
                         href={`/campaigns/${deliverable.campaign.id}`}
-                        className="font-medium hover:text-[var(--accent)] hover:underline"
+                        className="rounded font-medium hover:text-[var(--accent)] hover:underline focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:outline-offset-2"
                       >
                         {deliverable.campaign.name}
                       </Link>

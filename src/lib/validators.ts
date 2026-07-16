@@ -144,23 +144,22 @@ export const STAGE_ORDER: StageValue[] = [
   "PAID",
 ];
 
-const amountOptional = z.coerce
-  .number({ message: "Amount must be a number" })
-  .nonnegative("Amount can't be negative")
-  .max(10_000_000, "That amount looks off — double check it")
-  .optional()
-  .or(z.literal(""))
-  .transform((v) => (v === "" ? undefined : v));
+// preprocess first so these schemas are idempotent — safe to validate raw
+// form input (strings) AND already-parsed output (Date/number), since the
+// server action re-validates the same data the client already parsed.
+const amountOptional = z.preprocess(
+  (v) => (v === "" || v === undefined || v === null ? undefined : v),
+  z.coerce
+    .number({ message: "Amount must be a number" })
+    .nonnegative("Amount can't be negative")
+    .max(10_000_000, "That amount looks off — double check it")
+    .optional()
+);
 
-const dueDateOptional = z
-  .string()
-  .trim()
-  .optional()
-  .or(z.literal(""))
-  .transform((v) => (v ? new Date(v) : undefined))
-  .refine((d) => d === undefined || !Number.isNaN(d.getTime()), {
-    message: "Enter a valid date",
-  });
+const dueDateOptional = z.preprocess(
+  (v) => (v === "" || v === undefined || v === null ? undefined : v),
+  z.coerce.date({ message: "Enter a valid date" }).optional()
+);
 
 export const deliverableSchema = z.object({
   creatorId: z.string().trim().min(1, "Pick a creator"),

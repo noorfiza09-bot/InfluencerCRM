@@ -4,6 +4,7 @@ import { getDeliverableById } from "@/server/deliverables";
 import { DeliverableStatusSelect } from "@/components/deliverable-status-select";
 import { NoteTimeline } from "@/components/note-timeline";
 import { PlatformBadge } from "@/components/platform-badge";
+import { CreatorAvatar } from "@/components/creator-avatar";
 
 const CURRENCY = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -29,24 +30,27 @@ export default async function DeliverableDetailPage({
     <div>
       <Link
         href={`/campaigns/${deliverable.campaign.id}`}
-        className="text-sm text-[var(--muted)] hover:text-[var(--foreground)]"
+        className="rounded text-sm text-[var(--muted)] hover:text-[var(--foreground)] focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:outline-offset-2"
       >
         ← Back to {deliverable.campaign.name}
       </Link>
 
       <div className="mt-4 flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight">
-            <Link
-              href={`/creators/${deliverable.creator.id}`}
-              className="hover:text-[var(--accent)] hover:underline"
-            >
-              {deliverable.creator.name}
-            </Link>
-          </h1>
-          <p className="mt-1 text-sm text-[var(--muted)]">
-            {deliverable.creator.handle} · {deliverable.campaign.name}
-          </p>
+        <div className="flex items-center gap-4">
+          <CreatorAvatar name={deliverable.creator.name} size="lg" />
+          <div>
+            <h1 className="text-2xl font-semibold tracking-tight">
+              <Link
+                href={`/creators/${deliverable.creator.id}`}
+                className="rounded hover:text-[var(--accent)] hover:underline focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:outline-offset-2"
+              >
+                {deliverable.creator.name}
+              </Link>
+            </h1>
+            <p className="mt-1 text-sm text-[var(--muted)]">
+              {deliverable.creator.handle} · {deliverable.campaign.name}
+            </p>
+          </div>
         </div>
         <div className="w-48 shrink-0">
           <DeliverableStatusSelect deliverableId={deliverable.id} status={deliverable.status} />
