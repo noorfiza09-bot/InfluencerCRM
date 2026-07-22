@@ -33,6 +33,7 @@ Built for the Digital Heroes Full Stack Developer Trial. See [`plan.md`](./plan.
 - Creator directory: create/edit/delete (soft delete), server-side search (debounced 300ms) and filter by platform + niche, all mirrored into the URL query string
 - Campaigns: create/edit/delete (soft delete), with a deliverable-count summary per campaign
 - Deliverables: attach a creator to a campaign (defaults to Outreach sent), table view grouped by stage (plan.md §7), remove a deliverable
+- **Kanban board (plan.md §7 stretch goal)**: campaign detail page has a Table/Board toggle — the board is drag-and-drop between stage columns, calling the exact same `moveStage` action as the table's dropdown, with optimistic reordering and rollback on failure. Every card also carries the same dropdown as a keyboard-accessible fallback, since drag-and-drop alone isn't reliably keyboard-operable.
 - Deliverable detail page: interactive stage dropdown with optimistic UI and rollback on failure, notes timeline (add + list, newest first, timestamped)
 - Dashboard: deliverable counts by stage across all campaigns, upcoming due dates (next 7 days), active campaign summary cards with a derived Upcoming/Active/Ended status
 - Deliverable history surfaced on the creator detail page and campaign detail page

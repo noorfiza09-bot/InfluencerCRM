@@ -5,7 +5,7 @@ import { listDeliverablesByCampaign } from "@/server/deliverables";
 import { listCreators } from "@/server/creators";
 import { CampaignDetailActions } from "@/components/campaign-detail-actions";
 import { AddDeliverableButton } from "@/components/add-deliverable-button";
-import { DeliverableTable } from "@/components/deliverable-table";
+import { DeliverableView } from "@/components/deliverable-view";
 
 const CURRENCY = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -92,7 +92,7 @@ export default async function CampaignDetailPage({
               )}
             </div>
           ) : (
-            <DeliverableTable deliverables={deliverables} />
+            <DeliverableView deliverables={deliverables} />
           )}
         </div>
       </div>
